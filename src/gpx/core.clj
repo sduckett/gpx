@@ -1,8 +1,8 @@
 (ns gpx.core
   (:require [clojure.xml :refer :all]
             [clojure.algo.generic.math-functions :refer :all]
-            [clj-time.format :as tf]
-            [clj-time.core :as tc])
+            [clj-time.core :as time]
+            [clj-time.format :as time.format])
   (:gen-class))
 
 (def RADIUS-OF-EARTH-IN-METERS 6367)
@@ -37,7 +37,7 @@
 
 (defn transform-trkpt [p]
   (let [t   (find-tag (:content p) :time)
-        ts  (tf/parse (first (:content t)))
+        ts  (time.format/parse (first (:content t)))
         e   (find-tag (:content p) :ele)
         es  (first (:content e))
         lat (read-string (get-in p [:attrs :lat]))
@@ -57,9 +57,9 @@
 
 (defn calculate-time [coll]
   "in seconds"
-  (tc/in-seconds
-    (tc/interval (:time (first coll))
-                 (:time (last coll)))))
+  (time/in-seconds
+    (time/interval (:time (first coll))
+                 (:time (last coll))))) ;TODO benchmark me?
 
 ;;; This gives a StackOverflowError when given 9830 points!
 ;;; 5000 works fine ;)
