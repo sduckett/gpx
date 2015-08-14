@@ -23,6 +23,15 @@ Example output:
 
 [1]: http://leiningen.org/
 
+TODO
+----
+
+- namespaces for context-narrowing
+- write tests around parsing functions
+- format time as HH::MM::SS
+- plot an elevation profile of the track
+- output distance / average speed as metric or imperial units
+
 License
 -------
 
