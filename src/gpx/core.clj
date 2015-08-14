@@ -21,9 +21,11 @@
                 (cos (rad (destination :lat))) 
                 (pow (sin (/ (rad (- (destination :lon) (position :lon))) 2)) 2)))
         angular_distance (* (asin (sqrt square_half_chord)) 2)]
-    (* angular_distance R)))
- 
-(defn parse-gpx [path]
+    (* angular_distance RADIUS-OF-EARTH-IN-METERS)))
+
+(defn parse-gpx
+  "Gets the raw XML structure built from a file. Reads the whole dang thing."
+  [path]
   (parse (java.io.ByteArrayInputStream. (.getBytes (slurp path)))))
 
 (defn tag? [tag m]
@@ -58,12 +60,26 @@
     (tc/interval (:time (first coll))
                  (:time (last coll)))))
 
+;;; This gives a StackOverflowError when given 9830 points!
+;;; 5000 works fine ;)
+;;; davis-meadows-recon.gpx should be about 33.75 km long.
 (defn calculate-distance [coll]
   (if (< (count coll) 2)
     0
-    (+ (haversine (first coll)
+    (+ (haversine (first coll)          ; is this holding on to the head the whole way down? seems like that might be a suspect in blowing the stack...
                   (second coll))
        (calculate-distance (rest coll)))))
+
+(defn lazy-calculate-distance
+  "Using simple tail-recursion, see if we can fix the StackOverflowError..."
+  [coll]
+  (letfn [(kapow [coll acc]
+            (if (< (count coll) 2)
+              acc
+              (recur (rest coll)
+                     (+ (haversine (first coll) (second coll))
+                        acc))))]
+    (kapow coll 0)))
 
 (defn rround [n]
   (/ (round (* n 100)) 100.0))
@@ -72,7 +88,7 @@
   (when-let [path (first args)]
     (let [points        (get-points path)
           elapsed-time  (calculate-time points)
-          distance      (rround (calculate-distance points))
+          distance      (rround (lazy-calculate-distance points))
           average-speed (rround (/ distance (/ elapsed-time 3600)))]
       (println "Distance:     " distance "km")
       (println "Elapsed time: " elapsed-time "s")
