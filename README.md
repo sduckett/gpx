@@ -4,9 +4,9 @@ gpx
 This is a simple Clojure application to parse a GPX file and display some
 information about it.
 
-* Total distance
-* Elapsed time
-* Average speed
+* Total distance, in meters
+* Elapsed time, in seconds
+* Average speed, in kilometers / hour
 
 Usage
 -----
