@@ -4,8 +4,9 @@
 
 (defn get-points [path]
   (let [raw (get-data (parse-gpx path))
-        trks (:content (find-tag raw :trkseg))]
-    (sort-by :time (map transform-trkpt trks))))
+        trackpoints (:content (find-tag raw :trkseg))
+        track (map transform-trackpoint trackpoints)]
+    (sort-by :time track)))
 
 (defn track->distance
   "Calculate the distance, in meters, of a sequence of track points
