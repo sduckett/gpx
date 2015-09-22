@@ -6,4 +6,6 @@
                  [org.clojure/algo.generic "0.1.2"]]
   :main ^:skip-aot gpx.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}
+             :dev {:dependencies [[criterium "0.4.3"]
+                                  [org.clojure/test.check "0.8.1"]]}})
