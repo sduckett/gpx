@@ -1,5 +1,5 @@
 (ns gpx.parsing
-  (:require [gpx.geometry :refer [haversine rround]]
+  (:require [gpx.geometry :refer [haversine]]
             [gpx.parsing.impl :refer :all]))
 
 (defn get-points [path]
