@@ -1,8 +1,10 @@
 (ns gpx.time
   (:require [clj-time.core :as time]))
 
-(defn elapsed-time [coll]
-  "in seconds"
-  (time/in-seconds
-   (time/interval (:time (first coll))
-                  (:time (last coll))))) ;; TODO benchmark
+(defn elapsed-time
+  "The time, in seconds, between the earliest and latest trackpoints"
+  [trackpoints]
+  (let [points (sort-by :time trackpoints)]
+    (time/in-seconds
+     (time/interval (:time (first points))
+                    (:time (last points))))))

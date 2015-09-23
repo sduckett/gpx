@@ -2,9 +2,11 @@
   (:require [gpx.geometry :refer [haversine]]
             [gpx.parsing.impl :refer :all]))
 
-(defn get-points [path]
-  (let [raw (get-data (parse-gpx path))
-        trackpoints (:content (find-tag raw :trkseg))
+(defn get-points
+  "Get set of trackpoints in chronological order"
+  [path]
+  (let [xml (get-data path)
+        trackpoints (:content (find-tag xml :trkseg))
         track (map transform-trackpoint trackpoints)]
     (sort-by :time track)))
 

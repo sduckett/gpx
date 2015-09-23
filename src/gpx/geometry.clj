@@ -2,17 +2,28 @@
   (:require
    [clojure.algo.generic.math-functions :refer [pow sin cos asin sqrt round]]))
 
-(def ^{:private true} RADIUS-OF-EARTH-IN-METERS 6367)
+(def ^{:private true :doc "The radius of the earth is a little fuzzy here."}
+  RADIUS-OF-EARTH-IN-METERS 6367)
 
-(defn- rad [x]
-  (* x (/ Math/PI 180)))
+(defn- rad
+  "FIXME rad argument to haversine function (180° d/πR)."
+  [d]
 
-(defn- meter [x] (* x 1000))
+  (* d (/ Math/PI 180)))
+
+(defn- meter
+  "FIXME what is the deal, yo?"
+  [x] (* x 1000))
 
 (defn rround
-  "WTF is this for?"
+  "FIXME WTF is this for?"
   [n]
   (/ (round (* n 100)) 100.0))
+
+(defn haversin
+  "TODO Compute the versed sine"
+  [theta]
+  (/ 2 (- 1 (cos theta))))
 
 (defn haversine
   "Compute the distance between two points on the Earth's surface.
