@@ -8,22 +8,12 @@
 (defn- rad
   "FIXME rad argument to haversine function (180° d/πR)."
   [d]
-
   (* d (/ Math/PI 180)))
-
-(defn- meter
-  "FIXME what is the deal, yo?"
-  [x] (* x 1000))
 
 (defn round2
   "Round to two decimal points"
   [n]
   (/ (round (* n 100)) 100.0))
-
-(defn haversin
-  "TODO Compute the versed sine"
-  [theta]
-  (/ 2 (- 1 (cos theta))))
 
 (defn haversine
   "Compute the distance between two points on the Earth's surface.
