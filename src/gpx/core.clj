@@ -1,7 +1,7 @@
 (ns gpx.core
   (:require [gpx.parsing :refer [get-points track->distance]]
             [gpx.time :refer [elapsed-time]]
-            [gpx.geometry :refer [rround]])
+            [gpx.geometry :refer [round2]])
   (:gen-class))
 
 (defn -main
@@ -10,8 +10,8 @@
   (when-let [path (first args)]
     (let [points        (get-points path)
           elapsed-time  (elapsed-time points)
-          distance      (rround (track->distance points))
-          average-speed (rround (/ distance (/ elapsed-time 3600)))
+          distance      (round2 (track->distance points))
+          average-speed (round2 (/ distance (/ elapsed-time 3600)))
           min-elevation (:elevation (first (sort-by :elevation points)))
           max-elevation (:elevation (last (sort-by :elevation points)))]
       (println "Distance:     " distance "km")

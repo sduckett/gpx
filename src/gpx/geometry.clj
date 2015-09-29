@@ -15,8 +15,8 @@
   "FIXME what is the deal, yo?"
   [x] (* x 1000))
 
-(defn rround
-  "FIXME WTF is this for?"
+(defn round2
+  "Round to two decimal points"
   [n]
   (/ (round (* n 100)) 100.0))
 
