@@ -1,19 +1,12 @@
-(ns gpx.geometry
-  (:require
-   [clojure.algo.generic.math-functions :refer [pow sin cos asin sqrt round]]))
+(ns gpx.geometry)
 
 (def ^{:private true :doc "The radius of the earth is a little fuzzy here."}
   RADIUS-OF-EARTH-IN-METERS 6367)
 
-(defn- rad
-  "FIXME rad argument to haversine function (180° d/πR)."
-  [d]
-  (* d (/ Math/PI 180)))
-
 (defn round2
   "Round to two decimal points"
   [n]
-  (/ (round (* n 100)) 100.0))
+  (/ (Math/round (* n 100)) 100.0))
 
 (defn haversine
   "The haversine distance between two geographical points 1 and 2;
