@@ -1,5 +1,6 @@
 gpx
 ===
+[![Circle CI](https://circleci.com/gh/sduckett/gpx/tree/master.svg?style=svg)](https://circleci.com/gh/sduckett/gpx/tree/master)
 
 This is a simple Clojure application to parse a GPX file and display some
 information about it.
